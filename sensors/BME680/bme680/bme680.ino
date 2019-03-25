@@ -16,12 +16,19 @@
 #include <Adafruit_Sensor.h> https://github.com/adafruit/Adafruit_Sensor
 #include "Adafruit_BME680.h" https://github.com/adafruit/Adafruit_BME680
 
+//#include <WiFi.h> //ESP32
+#include <ESP8266WiFi.h> //ESP8266
+#include <PubSubClient.h> //MQTT
+#include "config.h"
+#include "wifiJusti.h"
+#include "mqttJusti.h"
+
 //define bme value variables
 double humidity    = 0.0;  // Feuchtigkeit
 double temperature = 0.0;  // Temperatur
 double pressure    = 0.0;  // Luftdruck in hPa
 double gas         = 0.0;  // Air Quality Gas/Luftqualitaet
-double est_altitude= 0.0;  // Ungefaehre Hoehe
+double altitude    = 0.0;  // est_altitude Ungefaehre Hoehe
 
 #define BME_SCK 13
 #define BME_MISO 12
@@ -37,6 +44,15 @@ Adafruit_BME680 bme; // I2C (NodeMCU SCK = D1/GPIO5, SDI = D2/GPIO4)
 void setup() {
   Serial.begin(9600); // start seriellen monitor
   while (!Serial);
+
+  // connecting wifi and mqtt server
+  connectWifi();
+  Serial.println("Connecting to MQTT");
+  connectMqtt();
+
+  Serial.println("Subscribe to Topics");
+  subscribeTopics();
+
   Serial.println(F("BME680 test"));
 
   if (!bme.begin(0x77)) {
@@ -64,27 +80,32 @@ void loop() {
   pressure      = bme.pressure / 100.0;
   humidity      = bme.humidity;
   gas           = bme.gas_resistance / 1000.0;
-  est_altitude  = bme.readAltitude(SEALEVELPRESSURE_HPA);
+  altitude  = bme.readAltitude(SEALEVELPRESSURE_HPA);
   
   Serial.print("Temperature = ");
   Serial.print(temperature);
   Serial.println(" *C");
+  publishData(MQTT_TEMPERATURE, temperature);
 
   Serial.print("Pressure = ");
   Serial.print(pressure);
   Serial.println(" hPa");
+  publishData(MQTT_PRESSURE, pressure);
 
   Serial.print("Humidity = ");
   Serial.print(humidity);
   Serial.println(" %");
+  publishData(MQTT_HUMIDITY, humidity);
 
   Serial.print("Gas = ");
   Serial.print(gas);
   Serial.println(" KOhms");
+  publishData(MQTT_GAS, gas);
 
   Serial.print("Approx. Altitude = ");
-  Serial.print(est_altitude);
+  Serial.print(altitude);
   Serial.println(" m");
+  publishData(MQTT_ALTITUDE, altitude);
 
   Serial.println();
   delay(2000);
