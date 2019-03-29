@@ -1,9 +1,9 @@
-char*   WIFI_SSID       = "YourSSID";
-char*   WIFI_PASSWORD   = "YourPassword";
+char*   WIFI_SSID       = "mp_dart";
+char*   WIFI_PASSWORD   = "siemens18";
 
 // MQTT defenitions
 
-const char*   MQTT_HOST       = "192.168.178.193";
+const char*   MQTT_HOST       = "192.168.43.151";
 const int     MQTT_PORT       = 1883;
 const char*   MQTT_CLIENTID   = "airquality-client";
 const char*   MQTT_USERNAME   = "username";

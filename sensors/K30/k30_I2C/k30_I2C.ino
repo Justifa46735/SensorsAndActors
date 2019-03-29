@@ -4,6 +4,13 @@
 
 #include <Wire.h>
 
+//#include <WiFi.h> //ESP32
+#include <ESP8266WiFi.h> //ESP8266
+#include <PubSubClient.h> //MQTT
+#include "config.h"
+#include "wifiJusti.h"
+#include "mqttJusti.h"
+
 // We will be using the I2C hardware interface on the Arduino in
 // combination with the built-in Wire library to interface.
 // Arduino analog input 5 - I2C SCL NodeMCU D1
@@ -22,6 +29,14 @@ int co2Addr = 0x68;
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
+
+  // connecting wifi and mqtt server
+  connectWifi();
+  Serial.println("Connecting to MQTT");
+  connectMqtt();
+
+  Serial.println("Subscribe to Topics");
+  subscribeTopics();
 
   //initialize wire
   Wire.begin ();
@@ -138,6 +153,7 @@ void loop() {
      Serial.print(co2Value);
      Serial.println(" ppm");
      Serial.println(); //make it easy on the eyes
+     publishData(MQTT_PPM, co2Value);
 
   }
   else
