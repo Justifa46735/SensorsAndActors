@@ -10,6 +10,7 @@
 #include "config.h"
 #include "wifiJusti.h"
 #include "mqttJusti.h"
+#include "led.h"
 
 // We will be using the I2C hardware interface on the Arduino in
 // combination with the built-in Wire library to interface.
@@ -17,7 +18,7 @@
 // Arduino analog input 4 - I2C SDA NodeMCU D2
 
 // This is the time resolution of sensor readings in ms.
-int readingTime = 2000;
+int readingTime = 4000;
 
 /*
   In this example we will do a basic read of the CO2 value and checksum
@@ -37,6 +38,11 @@ void setup() {
 
   Serial.println("Subscribe to Topics");
   subscribeTopics();
+
+  Serial.println("register LEDs");
+  setupLED(D6);
+  setupLED(D7);
+  setupLED(D8);
 
   //initialize wire
   Wire.begin ();
@@ -78,7 +84,7 @@ int readCO2()
     primary duties are to accurately measure CO2 values. Waiting 10ms
     ensures the data is properly written to RAM
   */
-  delay(10);
+  delay(20);
   /////////////////////////
   /* Begin Read Sequence */
   /////////////////////////
@@ -154,11 +160,32 @@ void loop() {
      Serial.println(" ppm");
      Serial.println(); //make it easy on the eyes
      publishData(MQTT_PPM, co2Value);
+     if(co2Value > 1500)
+     {
+      turnLedOn(D8);
+      turnLedOff(D7);
+      turnLedOff(D6);
+     }
+     else if(co2Value > 1100)
+     {
+      turnLedOn(D7);
+      turnLedOff(D8);
+      turnLedOff(D6);
+     }
+     else
+     {
+      turnLedOn(D6);
+      turnLedOff(D8);
+      turnLedOff(D7);
+     }
 
   }
   else
   {
-    Serial.println("Checksum failed / Communication failure");
+   Serial.println("Checksum failed / Communication failure");
+   turnLedOnForMs(D6,200);
+   turnLedOnForMs(D7,200);
+   turnLedOnForMs(D8,200);
   }
 
   delay(readingTime);
