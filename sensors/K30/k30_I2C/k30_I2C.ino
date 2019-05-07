@@ -4,6 +4,7 @@
 
 #include <Wire.h>
 
+#include <ArduinoJson.h>
 //#include <WiFi.h> //ESP32
 #include <ESP8266WiFi.h> //ESP8266
 #include <PubSubClient.h> //MQTT
@@ -133,10 +134,42 @@ int readCO2()
      return 0;
   }
 }
+
+char *createMQTTmessage(int co2Value , const char* DataType)
+{
+  //Json object for MQTT
+  StaticJsonBuffer<300> JSONbuffer;
+  JsonObject& JSONencoder = JSONbuffer.createObject();
+  JSONencoder["RoomID"] = "1";
+  JSONencoder["RoomName"] = MQTT_SUBSCRIBE_TOPIC_LEVEL_1;
+  JSONencoder["SensorID"] = "1";
+  JSONencoder["SensorName"] = "K30";
+  JsonArray& Value = JSONencoder.createNestedArray("Value");
+  JSONencoder["Unit"] = DataType;
+
+  Value.add(co2Value);
+
+  char JSONmessageBuffer[512];
+  JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
+  Serial.println("Sending message to MQTT topic..");
+  Serial.println(JSONmessageBuffer);
+  
+  //sprintf (buffer, "\"%s\": plus %d is %d", "RoomID",MQTT_SUBSCRIBE_TOPIC_LEVEL_1, b, a+b);
+  //sprintf (msg, "\"RoomID\":\"%d\", \"RoomName\":\"%s\", \"SensorID\":\"%d\", \"SensorName\":\"K30\", \"Value\":\"%d\", \"Unit\":\"%s\"}", 1,MQTT_SUBSCRIBE_TOPIC_LEVEL_1, 1, co2Value, MQTT_PPM);
+  //{'RoomID':'1', 'RoomName': 'MQTT_SUBSCRIBE_TOPIC_LEVEL_1', 'SensorID' : '1', 'SensorName':'K30', }
+  //String message = "{\"RoomID\":\"" +  "1" + "\", " + "\"RoomName\":\"" + MQTT_SUBSCRIBE_TOPIC_LEVEL_1 + "\", " + "\"SensorID\":\"" + "1" + "\", " + "\"SensorName\":\"" + "K30" + "\", " + "\"Value\":\"" + co2Value + "\", "+ "\"Unit\":\"" + MQTT_PPM + "\"}";
+  //char _co2Value[64];
+  //snprintf(_co2Value, 64, "%.2f", co2Value);
+  //String message = "{\"RoomID\":\"" + "test" + "\", " + "\"RoomName\":\"" + MQTT_SUBSCRIBE_TOPIC_LEVEL_1 + "\", " + "\"SensorID\":\"" + "001" + "\", " + "\"SensorName\":\"" + "K30" + "\", " + "\"Value\":\"" + _co2Value + "\", " + "\"Unit\":\"" + MQTT_PPM + "\"}";
+  return JSONmessageBuffer;
+}
+
 void loop() {
   // make a string for assembling the data to log:
      String dataString = "";
-
+  
+ 
+  
   int co2Value = readCO2();
   if (co2Value > 0)
   {
@@ -159,25 +192,25 @@ void loop() {
      Serial.print(co2Value);
      Serial.println(" ppm");
      Serial.println(); //make it easy on the eyes
-     publishData(MQTT_PPM, co2Value);
-     if(co2Value > 1500)
-     {
-      turnLedOn(D8);
-      turnLedOff(D7);
-      turnLedOff(D6);
-     }
-     else if(co2Value > 1100)
-     {
-      turnLedOn(D7);
-      turnLedOff(D8);
-      turnLedOff(D6);
-     }
-     else
-     {
-      turnLedOn(D6);
-      turnLedOff(D8);
-      turnLedOff(D7);
-     }
+     publishData(MQTT_PPM, createMQTTmessage(co2Value, MQTT_PPM));
+//     if(co2Value > 1500)
+//     {
+//      turnLedOn(D8);
+//      turnLedOff(D7);
+//      turnLedOff(D6);
+//     }
+//     else if(co2Value > 1100)
+//     {
+//      turnLedOn(D7);
+//      turnLedOff(D8);
+//      turnLedOff(D6);
+//     }
+//     else
+//     {
+//      turnLedOn(D6);
+//      turnLedOff(D8);
+//      turnLedOff(D7);
+//     }
 
   }
   else

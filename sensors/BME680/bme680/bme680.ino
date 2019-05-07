@@ -16,6 +16,7 @@
 #include <Adafruit_Sensor.h> https://github.com/adafruit/Adafruit_Sensor
 #include "Adafruit_BME680.h" https://github.com/adafruit/Adafruit_BME680
 
+#include <ArduinoJson.h>
 //#include <WiFi.h> //ESP32
 #include <ESP8266WiFi.h> //ESP8266
 #include <PubSubClient.h> //MQTT
@@ -68,6 +69,26 @@ void setup() {
   bme.setGasHeater(320, 150); // 320*C for 150 ms
 }
 
+char *createMQTTmessage(int co2Value , const char* DataType)
+{
+  //Json object for MQTT
+  StaticJsonBuffer<300> JSONbuffer;
+  JsonObject& JSONencoder = JSONbuffer.createObject();
+  JSONencoder["RoomID"] = "1";
+  JSONencoder["RoomName"] = MQTT_SUBSCRIBE_TOPIC_LEVEL_1;
+  JSONencoder["SensorID"] = "1";
+  JSONencoder["SensorName"] = "BME680";
+  JSONencoder["Value"] = String(co2Value);
+  JSONencoder["Unit"] = DataType;
+
+  char JSONmessageBuffer[512];
+  JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
+  Serial.println("Sending message to MQTT topic..");
+  Serial.println(JSONmessageBuffer);
+  
+  return JSONmessageBuffer;
+}
+
 void loop() {
   // read from BME680
   if (! bme.performReading()) {
@@ -81,31 +102,37 @@ void loop() {
   humidity      = bme.humidity;
   gas           = bme.gas_resistance / 1000.0;
   altitude  = bme.readAltitude(SEALEVELPRESSURE_HPA);
+ 
   
   Serial.print("Temperature = ");
   Serial.print(temperature);
   Serial.println(" *C");
-  publishData(MQTT_TEMPERATURE, temperature);
+  publishData(MQTT_TEMPERATURE, createMQTTmessage(temperature, MQTT_TEMPERATURE));
+  delay(500);
 
   Serial.print("Pressure = ");
   Serial.print(pressure);
   Serial.println(" hPa");
-  publishData(MQTT_PRESSURE, pressure);
+  publishData(MQTT_PRESSURE, createMQTTmessage(pressure, MQTT_PRESSURE));
+  delay(500);
 
   Serial.print("Humidity = ");
   Serial.print(humidity);
   Serial.println(" %");
-  publishData(MQTT_HUMIDITY, humidity);
+  publishData(MQTT_HUMIDITY, createMQTTmessage(humidity, MQTT_HUMIDITY));
+  delay(500);
 
   Serial.print("Gas = ");
   Serial.print(gas);
   Serial.println(" KOhms");
-  publishData(MQTT_GAS, gas);
+  publishData(MQTT_GAS, createMQTTmessage(gas, MQTT_GAS));
+  delay(500);
 
   Serial.print("Approx. Altitude = ");
   Serial.print(altitude);
   Serial.println(" m");
-  publishData(MQTT_ALTITUDE, altitude);
+  publishData(MQTT_ALTITUDE, createMQTTmessage(altitude, MQTT_ALTITUDE));
+  delay(500);
 
   Serial.println();
   delay(2000);

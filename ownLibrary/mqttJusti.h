@@ -40,14 +40,14 @@ void subscribeTopics()
   client.setCallback(&mqttMyCallback);
 }
 
-void publishData(const char* DataType, double _msg)
+void publishData(const char* DataType, char msg[512])
 {
-  char msg[64];
-  snprintf(msg, 64, "%.2f", _msg);
+   
   Serial.println("publish data");
   Serial.println(DataType);
   Serial.println(msg);
   String publishTopic = MQTT_BASE_TOPIC + "/" + MQTT_SUBSCRIBE_TOPIC_LEVEL_1 + "/" + DataType;
+  Serial.println(publishTopic);
 
   client.publish(publishTopic.c_str(), msg);
 }
