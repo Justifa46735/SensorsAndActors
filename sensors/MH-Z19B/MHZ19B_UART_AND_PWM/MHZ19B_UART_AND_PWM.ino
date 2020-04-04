@@ -5,6 +5,18 @@
  * Messwerterfassung durch PWM-Signal
  */
 
+//#include <WiFi.h> //ESP32
+#include <ESP8266WiFi.h> //ESP8266
+#include <PubSubClient.h> //MQTT
+#include "config.h"
+#include "wifiJusti.h"
+#include "mqttJusti.h"
+
+//define bme value variables
+int ppm    = 0.0;  // PPM from UART
+int temperature = 0.0;  // Temperatur from Uart
+int ppm_pwm    = 0.0;  // PPM from PWM
+
 // Da die Hardware-UART des Arduino vom USB-Kabel belegt
 // und über die Funktionen der Serial-Klasse schon 
 // verwendet werden, braucht es die SoftwareSerial-Klasse
@@ -41,6 +53,11 @@ void setup() {
   pinMode(pwmpin, INPUT);
   
   co2Serial.begin(9600);
+
+  // connecting wifi and mqtt server
+  connectWifi();
+  Serial.println("Connecting to MQTT");
+  connectMqtt(MQTT_CLIENTID_7);
   
 }
 
@@ -51,8 +68,6 @@ void setup() {
  
 void loop() {
 
-  int ppm, temperature, ppm_pwm = 0;
-
   // Messung der PWM-Länge mittels einer eigenen Funktion
 
   ppm_pwm = readCO2PWM();
@@ -61,7 +76,7 @@ void loop() {
 
   Serial.print("PPM PWM: ");
   Serial.println(ppm_pwm);
-
+  publishData(MQTT_MHZ19B_TOPIC_LEVEL_1, MQTT_PPM_PWM, ppm_pwm);
   delay(1000);
   
   readSensor(&ppm, &temperature);
@@ -70,6 +85,8 @@ void loop() {
   Serial.print(ppm);
   Serial.print(" Temperature: ");
   Serial.println(temperature);
+  publishData(MQTT_MHZ19B_TOPIC_LEVEL_1, MQTT_PPM, ppm);
+  publishData(MQTT_MHZ19B_TOPIC_LEVEL_1, MQTT_TEMPERATURE, temperature);
   
   delay(4000);
 }
