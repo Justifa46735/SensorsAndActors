@@ -48,10 +48,10 @@ void setup() {
   // connecting wifi and mqtt server
   connectWifi();
   Serial.println("Connecting to MQTT");
-  connectMqtt();
+  connectMqtt(MQTT_CLIENTID);
 
-  Serial.println("Subscribe to Topics");
-  subscribeTopics();
+  //Serial.println("Subscribe to Topics");
+  //subscribeTopics();
 
   Serial.println(F("BME680 test"));
 
@@ -85,27 +85,34 @@ void loop() {
   Serial.print("Temperature = ");
   Serial.print(temperature);
   Serial.println(" *C");
-  publishData(MQTT_TEMPERATURE, temperature);
+  publishData(MQTT_BME680_TOPIC_LEVEL_1, MQTT_TEMPERATURE, temperature);
+  delay(1000);
 
   Serial.print("Pressure = ");
   Serial.print(pressure);
   Serial.println(" hPa");
-  publishData(MQTT_PRESSURE, pressure);
+  publishData(MQTT_BME680_TOPIC_LEVEL_1, MQTT_PRESSURE, pressure);
+  delay(1000);
+
 
   Serial.print("Humidity = ");
   Serial.print(humidity);
   Serial.println(" %");
-  publishData(MQTT_HUMIDITY, humidity);
+  publishData(MQTT_BME680_TOPIC_LEVEL_1, MQTT_HUMIDITY, humidity);
+  delay(1000);
+
 
   Serial.print("Gas = ");
   Serial.print(gas);
   Serial.println(" KOhms");
-  publishData(MQTT_GAS, gas);
+  publishData(MQTT_BME680_TOPIC_LEVEL_1,MQTT_GAS, gas);
+  delay(1000);
+
 
   Serial.print("Approx. Altitude = ");
   Serial.print(altitude);
   Serial.println(" m");
-  publishData(MQTT_ALTITUDE, altitude);
+  publishData(MQTT_BME680_TOPIC_LEVEL_1, MQTT_ALTITUDE, altitude);
 
   Serial.println();
   delay(2000);
