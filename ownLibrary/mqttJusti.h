@@ -1,11 +1,11 @@
 PubSubClient client(espClient);
 
-void connectMqtt() {
+void connectMqtt(const char* MqttClientID) {
   Serial.println("Connecting to MQTT...");
   client.setServer(MQTT_HOST, MQTT_PORT);
 
   while (!client.connected()) {
-    if (!client.connect(MQTT_CLIENTID, MQTT_USERNAME, MQTT_PASSWORD)) {
+    if (!client.connect(MqttClientID, MQTT_USERNAME, MQTT_PASSWORD)) {
       Serial.print("MQTT connection failed:");
       Serial.print(client.state());
       Serial.println("Retrying...");
@@ -27,9 +27,9 @@ void mqttMyCallback (char *topic, byte *payload, unsigned int length)
 {
   String subscribeTopic = MQTT_BASE_TOPIC + "/" + MQTT_SUBSCRIBE_TOPIC_LEVEL_1 + "/" + MQTT_SUBSCRIBE_TOPIC_LEVEL_2;
   payload[length] = '\0';
-  int waterTime = atoi((char *)payload);
-  Serial.print("Watering Time ");
-  Serial.println(waterTime);
+  int actionTime = atoi((char *)payload);
+  Serial.print("Action Time ");
+  Serial.println(actionTime);
 }
 
 
@@ -40,14 +40,14 @@ void subscribeTopics()
   client.setCallback(&mqttMyCallback);
 }
 
-void publishData(const char* DataType, double _msg)
+void publishData(const char* ModuleName, const char* DataType, double _msg)
 {
   char msg[64];
   snprintf(msg, 64, "%.2f", _msg);
   Serial.println("publish data");
   Serial.println(DataType);
   Serial.println(msg);
-  String publishTopic = MQTT_BASE_TOPIC + "/" + MQTT_SUBSCRIBE_TOPIC_LEVEL_1 + "/" + DataType;
+  String publishTopic = MQTT_BASE_TOPIC + "/" + ModuleName + "/" + DataType;
 
   client.publish(publishTopic.c_str(), msg);
 }
