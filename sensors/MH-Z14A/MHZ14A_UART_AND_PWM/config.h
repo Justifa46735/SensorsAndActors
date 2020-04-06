@@ -1,5 +1,5 @@
-char*   WIFI_SSID       = "YourSSID";
-char*   WIFI_PASSWORD   = "YourPassword";
+char*   WIFI_SSID       = "JustWlan";
+char*   WIFI_PASSWORD   = "9gtd6hl987j98799WLAN!";
 
 // MQTT defenitions
 
@@ -16,7 +16,7 @@ const char*   MQTT_CLIENTID_8   = "airquality-client_8";
 const char*   MQTT_CLIENTID_9   = "airquality-client_9";
 const char*   MQTT_USERNAME   = "username";
 const char*   MQTT_PASSWORD   = "password";
-const String  MQTT_BASE_TOPIC = "mp/meetingrooms/airquality";
+const String  MQTT_BASE_TOPIC = "mp/meetingrooms/airquality"; 
 const String  MQTT_SUBSCRIBE_TOPIC_LEVEL_1 = "mpRoom";
 const String  MQTT_SUBSCRIBE_TOPIC_LEVEL_2 = "getData";
 
