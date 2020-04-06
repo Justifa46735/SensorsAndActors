@@ -4,7 +4,7 @@
 ### MG811
 ### MH-Z14A
 ### DSM501A
-### BME680
+### BME680 / CJMCU-680
 ### MH-Z19B
 ### CJMCU-MICS-6814
 ### TGS2600
