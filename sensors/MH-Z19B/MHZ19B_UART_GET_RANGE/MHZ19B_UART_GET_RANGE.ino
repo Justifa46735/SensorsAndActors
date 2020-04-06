@@ -13,6 +13,7 @@
 
 //set SoftwareSerial for Esp to pin D2 and D1
 SoftwareSerial co2Serial(5, 4); // define MH-Z19 RX TX
+
 // Der Befehl ist im Datenblatt nicht dokumentiert, hier gefunden:
 // https://revspace.nl/MH-Z19B
 byte cmd_getrange[9] = {0xFF,0x01,0x9B,0x00,0x00,0x00,0x00,0x00,0x64};
