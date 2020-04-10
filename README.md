@@ -16,3 +16,6 @@
 ### DHT22
 ## actors
 ###
+
+After cloning this repo run:
+* git submodule update --init --recursive
