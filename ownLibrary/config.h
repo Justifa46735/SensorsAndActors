@@ -32,6 +32,7 @@ const char*  MQTT_GAS = "gas";
 const char*  MQTT_ALTITUDE = "altitude";
 const char*  MQTT_PPM = "ppm";
 const char*  MQTT_PPM_PWM = "ppm_pwm";
+const char*  MQTT_PM1 = "pm1";
 const char*  MQTT_PM2DOT5 = "pm2dot5";
 const char*  MQTT_PM10 = "pm10";
 
@@ -45,3 +46,4 @@ const char*  MQTT_BMP180_2_TOPIC_LEVEL_1 = "BMP180_2";
 const char*  MQTT_SDS011_TOPIC_LEVEL_1 = "SDS011";
 const char*  MQTT_MHZ19B_TOPIC_LEVEL_1 = "MHZ19B";
 const char*  MQTT_MHZ14A_TOPIC_LEVEL_1 = "MHZ14A";
+const char*  MQTT_PMS7003_TOPIC_LEVEL_1 = "PMS7003";

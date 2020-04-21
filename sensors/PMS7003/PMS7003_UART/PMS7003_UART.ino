@@ -1,3 +1,10 @@
+//#include <WiFi.h> //ESP32
+#include <ESP8266WiFi.h> //ESP8266
+#include <PubSubClient.h> //MQTT
+#include "config.h"
+#include "wifiJusti.h"
+#include "mqttJusti.h"
+
 #include <SoftwareSerial.h>
 
 
@@ -9,6 +16,12 @@ Serial.begin(115200);
 
 // Use software serial
 mySerial.begin(9600);
+
+// connecting wifi and mqtt server
+connectWifi();
+Serial.println("Connecting to MQTT");
+connectMqtt(MQTT_CLIENTID_9);
+
 }
 
 void loop() {
@@ -130,6 +143,10 @@ Serial.print("Particle beyond 10  um in 0.1L air: ");
 Serial.print(pms[26]);
 Serial.println(pms[27]);
 Serial.println();
+
+publishData(MQTT_PMS7003_TOPIC_LEVEL_1, MQTT_PM1, concPM1_0_amb_int);
+publishData(MQTT_PMS7003_TOPIC_LEVEL_1, MQTT_PM2DOT5, concPM2_5_amb_int);
+publishData(MQTT_PMS7003_TOPIC_LEVEL_1, MQTT_PM10, concPM10_0_amb);
 
 }
 
