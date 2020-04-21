@@ -1,32 +1,35 @@
-[submodule "submodules/pubsubclient"]
-	path = submodules/pubsubclient
+[submodule "submodules/libraries/pubsubclient"]
+	path = submodules/libraries/pubsubclient
 	url = https://github.com/knolleary/pubsubclient
 	branch = master
-[submodule "submodules/espsoftwareserial"]
-	path = submodules/espsoftwareserial
+[submodule "submodules/libraries/espsoftwareserial"]
+	path = submodules/libraries/espsoftwareserial
 	url = https://github.com/plerup/espsoftwareserial/
 	branch = master
-[submodule "submodules/DHTesp"]
-	path = submodules/DHTesp
+[submodule "submodules/libraries/DHTesp"]
+	path = submodules/libraries/DHTesp
 	url = https://github.com/beegee-tokyo/DHTesp
 	branch = master
-[submodule "submodules/Adafruit_Sensor"]
-	path = submodules/Adafruit_Sensor
+[submodule "submodules/libraries/Adafruit_Sensor"]
+	path = submodules/libraries/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor
 	branch = master
-[submodule "submodules/Adafruit_BME680"]
-	path = submodules/Adafruit_BME680
+[submodule "submodules/libraries/Adafruit_BME680"]
+	path = submodules/libraries/Adafruit_BME680
 	url = https://github.com/adafruit/Adafruit_BME680
 	branch = master
-[submodule "submodules/Adafruit-BMP085-Library"]
-	path = submodules/Adafruit-BMP085-Library
-	url = https://github.com/adafruit/Adafruit-BMP085-Library
+[submodule "submodules/libraries/Adafruit-BMP085-Library"]
+	path = submodules/libraries/Adafruit-BMP085-Library
+	url = git@github.com:adafruit/Adafruit-BMP085-Library.git
 	branch = master
-[submodule "submodules/sds-dust-sensors-arduino-library"]
-	path = submodules/sds-dust-sensors-arduino-library
+[submodule "submodules/libraries/sds-dust-sensors-arduino-library"]
+	path = submodules/libraries/sds-dust-sensors-arduino-library
 	url = https://github.com/lewapek/sds-dust-sensors-arduino-library
 	branch = master
-[submodule "submodules/MQSensorsLib"]
-	path = submodules/MQSensorsLib
+[submodule "submodules/libraries/MQSensorsLib"]
+	path = submodules/libraries/MQSensorsLib
 	url = https://github.com/miguel5612/MQSensorsLib
 	branch = master
+[submodule "submodules/libraries/BMP180"]
+	path = submodules/libraries/BMP180
+	url = git@github.com:enjoyneering/BMP180.git
