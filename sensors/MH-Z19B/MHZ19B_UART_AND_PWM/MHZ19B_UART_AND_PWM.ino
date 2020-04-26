@@ -12,7 +12,7 @@
 #include "wifiJusti.h"
 #include "mqttJusti.h"
 
-//define bme value variables
+//define MHZ19B value variables
 int ppm    = 0.0;  // PPM from UART
 int temperature = 0.0;  // Temperatur from Uart
 int ppm_pwm    = 0.0;  // PPM from PWM
