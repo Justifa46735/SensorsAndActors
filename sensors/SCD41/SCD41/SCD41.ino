@@ -38,6 +38,19 @@
 #include <Arduino.h>
 #include <SensirionI2cScd4x.h>
 #include <Wire.h>
+#include <ESP8266WiFi.h> //ESP8266
+#include <PubSubClient.h> //MQTT
+#include "config.h"
+#include "wifiJusti.h"
+#include "mqttJusti.h"
+#include "led.h"
+
+//define SCD41 value variables
+int ppm    = 0.0;  // PPM from UART
+
+const int ledgreenpin = D6;
+const int ledyellowpin = D7;
+const int ledredpin = D8;
 
 // macro definitions
 // make sure that we use the proper definition of NO_ERROR
@@ -116,12 +129,24 @@ void setup() {
     // function above. Check out the header file for the definition.
     // For SCD41, you can also check out the single shot measurement example.
     //
+
+  setupLED(ledredpin);
+  setupLED(ledyellowpin);
+  setupLED(ledgreenpin);
+
+  connectWifi();
+  Serial.println("Connecting to MQTT");
+  connectMqtt(MQTT_CLIENTID);
+
+  turnLedOn(ledredpin);
+  turnLedOn(ledyellowpin);
+  turnLedOn(ledgreenpin);
 }
 
 void loop() {
 
     bool dataReady = false;
-    uint16_t co2Concentration = 0;
+    uint16_t ppm = 0;
     float temperature = 0.0;
     float relativeHumidity = 0.0;
     //
@@ -150,7 +175,7 @@ void loop() {
     // is required, you should call the respective functions here.
     // Check out the header file for the function definition.
     error =
-        sensor.readMeasurement(co2Concentration, temperature, relativeHumidity);
+        sensor.readMeasurement(ppm, temperature, relativeHumidity);
     if (error != NO_ERROR) {
         Serial.print("Error trying to execute readMeasurement(): ");
         errorToString(error, errorMessage, sizeof errorMessage);
@@ -160,7 +185,7 @@ void loop() {
     //
     // Print results in physical units.
     Serial.print("CO2 concentration [ppm]: ");
-    Serial.print(co2Concentration);
+    Serial.print(ppm);
     Serial.println();
     Serial.print("Temperature [°C]: ");
     Serial.print(temperature);
@@ -168,4 +193,26 @@ void loop() {
     Serial.print("Relative Humidity [RH]: ");
     Serial.print(relativeHumidity);
     Serial.println();
+
+    publishData(MQTT_SCD41_TOPIC_LEVEL_1, MQTT_PPM_UART, ppm);
+    publishData(MQTT_SCD41_TOPIC_LEVEL_1, MQTT_TEMPERATURE, temperature);
+
+    if(ppm > 1500)
+    {
+      turnLedOn(ledredpin);
+      turnLedOff(ledgreenpin);
+      turnLedOff(ledyellowpin);
+    }
+    else if(ppm > 1000)
+    {
+      turnLedOn(ledyellowpin);
+      turnLedOff(ledgreenpin);
+      turnLedOff(ledredpin);
+    }
+    else
+    {
+      turnLedOn(ledgreenpin);
+      turnLedOff(ledyellowpin);
+      turnLedOff(ledredpin);
+    }
 }
