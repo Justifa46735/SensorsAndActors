@@ -32,11 +32,26 @@ Checkout Tag "SCD41_initial_example" for an initial example (without wifi, mqtt 
 Checkout Tag "PMS7003_initial_example" for an initial example (without wifi, mqtt and etc.) to check if the Sensor works
 ### SDS011
 Checkout Tag "SDS011_initial_example" for an initial example (without wifi, mqtt and etc.) to check if the Sensor works
+
+The SDS011 is a laser-based particulate matter (PM) sensor from Nova Fitness, designed to measure PM2.5 and PM10 concentrations in the air.
+              
+  Key Features of the SDS011 Sensor:
+	  Measures PM2.5 & PM10 (in µg/m³).
+	  Laser Scattering Technology for high accuracy.
+	  UART (serial) communication.
+	  Operating Voltage: 5V.
+	  Built-in Fan for continuous air sampling.
 ### DSM501A
 tbd.
 
 ## actors
 ###
 
+## Getting started:
 After cloning this repo run:
 * git submodule update --init --recursive
+* Change the creditals in the file config.h in the folder ownLibrary
+* create symbolic links within the sensor folder that you want to flash on the esp8266 for the ownLibary files 
+  (ln -sf ~/git/SensorsAndActors/ownLibrary/config.h ~//git/SensorsAndActors/sensors/XXX/config.h)
+* add Esp8266 to the Ardunio preferences https://github.com/esp8266/Arduino
+* install espsoftwareserial (Beim Esp8266 muss die SoftwareSerial library ausgetauscht werden damit UART funktioniert.)
