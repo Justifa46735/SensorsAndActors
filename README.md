@@ -36,11 +36,12 @@ Checkout Tag "SDS011_initial_example" for an initial example (without wifi, mqtt
 The SDS011 is a laser-based particulate matter (PM) sensor from Nova Fitness, designed to measure PM2.5 and PM10 concentrations in the air.
               
   Key Features of the SDS011 Sensor:
-	  Measures PM2.5 & PM10 (in µg/m³).
-	  Laser Scattering Technology for high accuracy.
-	  UART (serial) communication.
-	  Operating Voltage: 5V.
-	  Built-in Fan for continuous air sampling.
+  * Measures PM2.5 & PM10 (in µg/m³).
+  * Laser Scattering Technology for high accuracy.
+  * UART (serial) communication.
+  * Operating Voltage: 5V.
+  * Built-in Fan for continuous air sampling.
+    
 ### DSM501A
 tbd.
 
