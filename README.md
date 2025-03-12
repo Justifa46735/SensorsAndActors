@@ -7,7 +7,7 @@ Checkout Tag "BMP180_initial_example" for an initial example (without wifi, mqtt
 
 The BMP180 is a barometric pressure sensor from Bosch Sensortec
       
-      Key Features of the BMP180 Sensor:
+Key Features of the BMP180 Sensor:
 	* Measures Pressure: 300 – 1100 hPa (hectopascals).
 	* Altitude Calculation: Based on pressure readings.
 	* Temperature Sensor: Built-in with ±1°C accuracy.
@@ -18,7 +18,7 @@ Checkout Tag "BME680_initial_example" or "CJMCU-680_initial_example" for an init
 
 The BME680 (also known as CJMCU-680) is an advanced environmental sensor from Bosch Sensortec that combines multiple sensing capabilities into a single compact module. It measures temperature, humidity, barometric pressure, and air quality (gas/VOC levels)
       
-      Key Features of the BME680 / CJMCU-680 Sensor:
+Key Features of the BME680 / CJMCU-680 Sensor:
 	* Temperature Measurement: -40°C to 85°C (±1°C accuracy).
 	* Humidity Measurement: 0–100% RH (±3% accuracy).
 	* Barometric Pressure Measurement: 300–1100 hPa (±1 hPa accuracy).
@@ -40,9 +40,9 @@ Key Features of the DHT22 Sensor:
 ### CJMCU-MICS-4514
 tbd.
 
-The CJMCU-MICS-4514 is a dual-channel gas sensor module that can detect multiple gases, 	making it useful for air quality monitoring and environmental sensing. It is based on the 	MICS-4514 sensor from SGX Sensortech.
+The CJMCU-MICS-4514 is a dual-channel gas sensor module that can detect multiple gases, making it useful for air quality monitoring and environmental sensing. It is based on the 	MICS-4514 sensor from SGX Sensortech.
 	
-	Key Features of the CJMCU-MICS-4514 Sensor:
+Key Features of the CJMCU-MICS-4514 Sensor:
 	* Dual-channel sensing: 
 		Reducing gases: CO (Carbon Monoxide), Hydrocarbons (CH₄, C₂H₆, etc.), Ethanol, 			Ammonia (NH₃), Hydrogen (H₂). 
 	* Oxidizing gases: Nitrogen Dioxide (NO₂). 
@@ -68,7 +68,7 @@ tbd.
 
 The TGS2600 is a semiconductor gas sensor developed by Figaro for detecting air contaminants such as carbon monoxide (CO), hydrogen (H₂), and volatile organic compounds (VOCs).
   
-  Key Features of the TGS2600 Sensor:
+Key Features of the TGS2600 Sensor:
 	* Detects a range of gases (Hydrogen, Carbon Monoxide, VOCs).
 	* Analog Output (resistance changes based on gas concentration).
 	* Pre-calibrated for indoor air quality applications.
@@ -80,7 +80,7 @@ Checkout Tag "K30_initial_example" for an initial example (without wifi, mqtt an
 
 The K30 or K30-FR (fast response) is a high-performance NDIR (Non-Dispersive Infrared) CO₂ sensor manufactured by SenseAir.
 	
- Key Features of the K30 CO₂ Sensor:
+Key Features of the K30 CO₂ Sensor:
 	* CO₂ Measurement Range: 0–10,000 ppm (with models available for different ranges). 
 	* Accuracy: ±30 ppm + 3% of the reading. 
 	* NDIR Technology: Provides stable and reliable CO₂ detection. 
@@ -106,7 +106,7 @@ The MH-Z14A is an NDIR (Non-Dispersive Infrared) CO₂ sensor designed for accur
 	* CO₂ Measurement Range: 0–5000 ppm.
 	* Accuracy: ±(50 ppm + 5% of the reading).
 	* NDIR Technology: Provides high stability.
-  * Automatic Baseline Calibration (ABC): Adjusts sensor drift over time.
+	* Automatic Baseline Calibration (ABC): Adjusts sensor drift over time.
 	* Multiple Communication Options:
       UART (Serial TTL, 9600 baud) 
       PWM (Pulse Width Modulation) 
@@ -140,7 +140,7 @@ Checkout Tag "PMS7003_initial_example" for an initial example (without wifi, mqt
 
 The PMS7003 is a laser-based particulate matter (PM) sensor from Plantower
       
-  Key Features of the PMS7003 Sensor:
+Key Features of the PMS7003 Sensor:
 	* Measures PM1.0, PM2.5, and PM10 (in µg/m³).
 	* Laser Scattering Technology for accurate particle detection.
 	* Serial Communication (UART at 9600 baud) for easy interfacing.
